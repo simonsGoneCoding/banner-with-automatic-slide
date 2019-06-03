@@ -39,18 +39,32 @@ const changeSlide = () => {
 let indexInterval = setInterval(changeSlide, time)
 
 const keyChangeSlide = (e) => {
-  if (e.keyCode === 37) {
-    activeSlide--
+
+  //--------changed with improved code--------
+
+  // if (e.keyCode === 37) {
+  //   activeSlide--
+  //   if (activeSlide < 0) {
+  //     activeSlide = 2;
+  //   }
+  // } else if (e.keyCode === 39) {
+  //   activeSlide++
+  //   if (activeSlide === slideList.length) {
+  //     activeSlide = 0;
+  //   }
+  // }
+
+  //---------improved code below--------
+
+  if (e.keyCode === 37 || e.keyCode === 39) {
+    clearInterval(indexInterval)
+    e.keyCode === 37 ? activeSlide-- : activeSlide++
     if (activeSlide < 0) {
-      activeSlide = 2;
-    }
-  } else if (e.keyCode === 39) {
-    activeSlide++
-    if (activeSlide === slideList.length) {
-      activeSlide = 0;
+      activeSlide = 2
+    } else if (activeSlide === slideList.length) {
+      activeSlide = 0
     }
   }
-  clearInterval(indexInterval)
   image.src = slideList[activeSlide].img
   h1.textContent = slideList[activeSlide].text
   changeDot()

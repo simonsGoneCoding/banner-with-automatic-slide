@@ -1,15 +1,15 @@
 const slideList = [{
-  img: 'images/img1.jpg',
-  text: 'First text'
- },
- {
-  img: 'images/img2.jpg',
-  text: 'Second text'
- },
- {
-  img: 'images/img3.jpg',
-  text: 'Third text'
- }
+    img: 'images/img1.jpg',
+    text: 'First text'
+  },
+  {
+    img: 'images/img2.jpg',
+    text: 'Second text'
+  },
+  {
+    img: 'images/img3.jpg',
+    text: 'Third text'
+  }
 ]
 
 //interface
@@ -21,19 +21,40 @@ let activeSlide = 0;
 
 //implementations
 const changeDot = () => {
- const activeDot = dots.findIndex(dot => dot.classList.contains('active'));
- dots[activeDot].classList.remove('active');
- dots[activeSlide].classList.add('active')
+  const activeDot = dots.findIndex(dot => dot.classList.contains('active'));
+  dots[activeDot].classList.remove('active');
+  dots[activeSlide].classList.add('active')
 }
 
 const changeSlide = () => {
- activeSlide++
- if (activeSlide === slideList.length) {
-  activeSlide = 0;
- }
- image.src = slideList[activeSlide].img
- h1.textContent = slideList[activeSlide].text
- changeDot()
+  activeSlide++
+  if (activeSlide === slideList.length) {
+    activeSlide = 0;
+  }
+  image.src = slideList[activeSlide].img
+  h1.textContent = slideList[activeSlide].text
+  changeDot()
 }
 
-setInterval(changeSlide, time)
+let indexInterval = setInterval(changeSlide, time)
+
+const keyChangeSlide = (e) => {
+  if (e.keyCode === 37) {
+    activeSlide--
+    if (activeSlide < 0) {
+      activeSlide = 2;
+    }
+  } else if (e.keyCode === 39) {
+    activeSlide++
+    if (activeSlide === slideList.length) {
+      activeSlide = 0;
+    }
+  }
+  clearInterval(indexInterval)
+  image.src = slideList[activeSlide].img
+  h1.textContent = slideList[activeSlide].text
+  changeDot()
+  indexInterval = setInterval(changeSlide, time)
+}
+
+window.addEventListener('keyup', keyChangeSlide)
